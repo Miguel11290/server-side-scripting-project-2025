@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CollegeController;
+use App\Http\Controllers\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +19,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//College routes
-Route::get('/colleges', [CollegeController::class, 'index'])->name('colleges.index'); //display all colleges
-Route::get('/colleges/create', [CollegeController::class, 'create'])->name('colleges.create'); //display form to create a new college
-Route::get('/colleges/{id}/edit', [CollegeController::class, 'edit'])->name('colleges.edit'); //display form to edit a college
+// College routes
+Route::resource('colleges', CollegeController::class)->only([
+    'index', 'create', 'edit', 'store', 'update', 'destroy'
+]);
 
-//Student routes
-Route::get('/students', [StudentController::class, 'index'])->name('students.index'); //display all students
-Route::get('/students/create', [StudentController::class, 'create'])->name('students.create'); //display form to create a new student
-Route::get('/students/{id}/edit', [StudentController::class, 'edit'])->name('students.edit'); //display form to edit a student
-Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy'); //delete a student
-
+// Student routes
+Route::resource('students', StudentController::class)->only([
+    'index', 'create', 'edit', 'store', 'update', 'destroy'
+]);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Models\College;
 
 class StudentController extends Controller
 {
@@ -35,10 +36,12 @@ class StudentController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:students',
+            'phone' => 'required|string|max:255',
+            'dob' => 'required|date',
             'college_id' => 'required|exists:colleges,id',
         ]);
-
-        Student::create($request->all());
+    
+        Student::create($request->only(['name', 'email', 'phone', 'dob', 'college_id']));
         return redirect()->route('students.index')->with('success', 'Student added successfully');
     }
 
@@ -54,11 +57,13 @@ class StudentController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:students,email,' . $id,
+            'phone' => 'required|string|max:255',
+            'dob' => 'required|date',
             'college_id' => 'required|exists:colleges,id',
         ]);
-
+    
         $student = Student::findOrFail($id);
-        $student->update($request->all());
+        $student->update($request->only(['name', 'email', 'phone', 'dob', 'college_id']));
         return redirect()->route('students.index')->with('success', 'Student updated successfully');
     }
 
