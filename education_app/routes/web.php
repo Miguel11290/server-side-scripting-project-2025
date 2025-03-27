@@ -17,7 +17,7 @@ use App\Http\Controllers\StudentController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 // College routes
 Route::resource('colleges', CollegeController::class)->only([
