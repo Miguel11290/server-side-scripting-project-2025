@@ -11,6 +11,13 @@ class College extends Model
 
     // Define the fillable properties
     protected $fillable = ['name', 'address'];
+
+    //Get the students for the college
+
+    public function students()
+    {
+        return $this->hasMany(Student::class);
+    }
 }
 
 ?>
